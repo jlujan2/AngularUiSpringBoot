@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="ISO-8859-1">
+    <title>Main Page</title>
+
+<body ng-app="demo">
+<hr/>
+<form name="myForm" ng-controller="UserController">
+<div class="container" >
+	<div class="row">
+		<div  ng-show="errorfunc()">
+			<h1 class="error-tab">{{ errorMessage }}</h1>
+		</div>
+		<label>Name</label>
+		<input only-letters-input type="text" type="text" ng-model="name" class="input-sm spacing" required/>
+		<label>Last name</label>
+		<input only-letters-input type="text" type="text" ng-model="lastName" class="input-sm spacing" required/>
+		<label>Email</label>
+		<input type="email" name="input" ng-model="input" class="intput-sm spacing" required/>
+		<span ng-show="!myForm.input.$valid && myForm.input.$touched">Invalid Format</span>
+ 		<button ng-click="saveUser()" class="btn btn-primary" ng-disabled="!name||!lastName||!input||!myForm.input.$valid && myForm.input.$touched">Save User</button>
+
+	</div>
+	<hr/>
+	<hr/>
+	<span ng-show="errorEdit" class="alert alert-danger">{{ editErrorMessage }}</span>
+	<table id="mytable">
+		<tbody>
+			<tr ng-repeat="user in allUsers">
+				<td>{{$index+1}}</td>
+				<td><input only-letters-input type="text" name="empName{{$index}}" ng-model="user.name" ng-disabled="!enabledEdit[{{$index}}]"/></td>
+				<td><input only-letters-input type="text" name="empLastName{{$index}}" ng-model="user.lastName" ng-disabled="!enabledEdit[{{$index}}]"/></td>
+				<td><input name="empEmail{{$index}}" ng-model="user.email" ng-disabled="!enabledEdit[{{$index}}]"/></td>
+				<td>
+					<div>
+						<button class="btn btn-sm btn-info" ng-click="deleteUser(user.id)">Delete</button>
+						<button class="btn btn-danger" ng-click="toggle=!toggle; editUser($index, toggle)">
+							<span ng-show="toggle" >Edit</span>
+							<span ng-hide="toggle" ng-disabled="false">Save</span>
+						</button>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+</div>
+</form>
+</body>
+<script src="js/lib/angular.min.js"></script>
+<script src="js/lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
+<script src="js/app/app.js"></script>
+<script src="js/app/UserController.js"></script>
+<script src="js/app/UserService.js"></script>
+<link rel="stylesheet" href="css/lib/bootstrap.min.css"/>
+<link rel="stylesheet" href="css/app/app.css"/>
+</html>
